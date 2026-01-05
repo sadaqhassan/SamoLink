@@ -5,11 +5,12 @@ import Auth from './Pages/Auth'
 import Dashboard from './Pages/Dashboard'
 import Projects from './Pages/Projects'
 import About from './Pages/About'
+import Nav from './components/Nav'
 
 const App = () => {
   return (
     <div>
-      
+      <Nav/>
 
       <Routes>
         <Route path='/' element={<Home/>}/>
