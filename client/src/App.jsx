@@ -6,10 +6,12 @@ import Dashboard from './Pages/Dashboard'
 import Projects from './Pages/Projects'
 import About from './Pages/About'
 import Nav from './components/Nav'
+import {Toaster} from 'react-hot-toast'
 
 const App = () => {
   return (
     <div>
+      {<Toaster/>}
       <Nav/>
 
       <Routes>

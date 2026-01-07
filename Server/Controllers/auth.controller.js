@@ -7,7 +7,7 @@ export const registerApi = async(req,res)=>{
     const {email,password,name} = req.body
 
     if(!email || !password || !name){
-       return res.status(400).json({success:false,message:"fill all credentials"})
+       return res.status(400).json({success:false,message:"please fill all credentials"})
     };
     try{
         const isUser = await User.findOne({email});
@@ -30,7 +30,7 @@ export const registerApi = async(req,res)=>{
         
         // res.cookies(token);
 
-        res.status(200).json({success:false, message:"Resgisteration successFully"})
+        res.status(200).json({success:true, message:"Resgisteration successFully"})
     }catch(err){
         console.log(err.message)
         res.json({success:false,message:"server error"})
@@ -40,28 +40,56 @@ export const registerApi = async(req,res)=>{
 
 //loginApi
 
-export const loginApi = async(req,res)=>{
-    const {email,password} = req.body;
-    if(!email || !password) {
-        return  res.status(400).json({success:false,message:"fill all credentials"})
-    };
+export const loginApi = async (req, res) => {
+  const { email, password } = req.body;
 
-    try {
-        const isUser = await User.findOne({email});
-        if(!isUser) {
-            return res.status(400).json({success:false,message:"Incorect Email or Password"})
-        }
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Fill all credentials"
+    });
+  }
 
-        const isMatch = bcrypt.compareSync(password,isUser.password);
-        if(!isMatch) {
-            return res.status(400).json({success:false,message:"Incorect Email or Password"})
-        }
-
-        
-
-    } catch (error) {
-        console.log(error.message)
-        res.status(500).json({success:false ,message:"server error"})
-        return;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect Email or Password"
+      });
     }
-}
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect Email or Password"
+      });
+    }
+
+    // JWT
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+   const {password:pass,...rest} = user._doc;
+
+
+
+    return res.status(200).json({
+      success: true,
+      message: `Welcome ${user.name}`,
+      token,
+      ...rest
+    });
+
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+};
