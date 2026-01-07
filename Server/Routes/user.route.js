@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerApi } from "../Controllers/auth.controller.js";
+import { loginApi, registerApi } from "../Controllers/auth.controller.js";
 
 const userRoute = Router();
 

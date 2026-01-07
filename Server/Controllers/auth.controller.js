@@ -45,4 +45,23 @@ export const loginApi = async(req,res)=>{
     if(!email || !password) {
         return  res.status(400).json({success:false,message:"fill all credentials"})
     };
+
+    try {
+        const isUser = await User.findOne({email});
+        if(!isUser) {
+            return res.status(400).json({success:false,message:"Incorect Email or Password"})
+        }
+
+        const isMatch = bcrypt.compareSync(password,isUser.password);
+        if(!isMatch) {
+            return res.status(400).json({success:false,message:"Incorect Email or Password"})
+        }
+
+        
+
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({success:false ,message:"server error"})
+        return;
+    }
 }
