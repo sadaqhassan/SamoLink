@@ -78,12 +78,13 @@ export const loginApi = async (req, res) => {
 
 
 
-    return res.status(200).json({
+    return res.status(200)
+    .cookie('accessToken',token,{httpOnly:true})
+    .json({
       success: true,
       message: `Welcome ${user.name}`,
-      token,
       ...rest
-    });
+    })
 
   } catch (error) {
     console.error(error.message);
@@ -93,3 +94,18 @@ export const loginApi = async (req, res) => {
     });
   }
 };
+ 
+// logout
+export const logoutApi = async(req,res)=>{
+  try{
+    const token = cookies.accessToken;
+    cookies.clear(token);
+
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+}

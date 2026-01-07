@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import{ Circle, ClosedCaption, MenuIcon, MoonIcon, Sun, X } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import{MenuIcon, MoonIcon, Sun, X } from 'lucide-react'
 
 const Nav = () => {
     const [mode,setMode] = useState('light')
     const [menuOpen,setMenuOpen] = useState(false)
-  return (
+    const navigate = useNavigate()
+    return (
     <main>
       {/* //deskttop/ */}
-      <div className={`md:flex hidden justify-between ${mode === 'light' ?  'bg-white px-2 py-2 text-black' :'bg-gray-700 px-2 py-2 text-white'} px-4 py-4 border-b-1 items-center shadow-2xl`}>
+      <div className={`md:flex hidden justify-between ${mode === 'light' ?  'bg-white px-2 py-2 text-black' :'bg-gray-700 px-2 py-2 text-white'} px-4 py-4 items-center shadow-2xl`}>
         <p className='text-xl md:text-2xl font-bold'>SamoLink</p>
         <div className='flex space-x-3'>
             <Link to={'/'}>Home</Link>
             <Link to={'/about'}>About</Link>
             <Link to={'/projects'}>Projects</Link>
         </div>
-        <div className={`flex items-center border pl-4 gap-2  h-[46px] rounded-full overflow-hidden max-w-md w-full ${mode === 'dark' ? "border-gray-100" : "border-1"}`}>
+        <div className={`flex items-center border pl-4 gap-2  h-[46px] rounded-full overflow-hidden max-w-md w-full ${mode === 'dark' ? "border-gray-100" : "border"}`}>
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 30 30" fill="#6B7280">
                 <path d="M13 3C7.489 3 3 7.489 3 13s4.489 10 10 10a9.95 9.95 0 0 0 6.322-2.264l5.971 5.971a1 1 0 1 0 1.414-1.414l-5.97-5.97A9.95 9.95 0 0 0 23 13c0-5.511-4.489-10-10-10m0 2c4.43 0 8 3.57 8 8s-3.57 8-8 8-8-3.57-8-8 3.57-8 8-8"/>
             </svg>
@@ -23,7 +24,7 @@ const Nav = () => {
         </div>
         <div className='flex space-x-4'>
             <button onClick={()=>{mode === 'dark' ? setMode('light') : setMode('dark')}} >{mode === 'light' ? <MoonIcon/> : <Sun/>}</button>
-            <button className='px-3 py-1 rounded bg-green-600 text-white'>Login</button>
+            <button onClick={()=>navigate('/auth')} className='px-3 py-1 rounded bg-green-600 text-white'>Login</button>
         </div>
       </div>
 
@@ -46,7 +47,7 @@ const Nav = () => {
         <Link to={'/'}>Home</Link>
         <Link to={'/about'}>About</Link>
         <Link to={'/projects'}>Projects</Link>
-        <button className='px-3 py-1 mr-5  rounded bg-green-600 text-white'>Login</button>
+        <button  onClick={()=>navigate('/auth')} className='px-3 py-1 mr-5  rounded bg-green-600 text-white'>Login</button>
 
     </div>
 }
