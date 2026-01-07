@@ -77,6 +77,8 @@ const Auth = () => {
           }
           <button type='button' onClick={()=>{state === 'register' ? setState('login') : setState('register'); setUserData({}) }}>{state === 'register' ? "Login" : "Register"}</button>
         </div>
+        <button type='button' className='outline-blue-600 outline-1 px-2 py-1 rounded-xl'>Continue to Google</button>
+
       </form>
     </div>
   )
