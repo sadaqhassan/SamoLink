@@ -7,7 +7,7 @@ export const registerApi = async(req,res)=>{
     const {email,password,name} = req.body
 
     if(!email || !password || !name){
-        res.status(400).json({success:false,message:"fill all credentials"})
+       return res.status(400).json({success:false,message:"fill all credentials"})
     };
     try{
         const isUser = await User.findOne({email});
@@ -35,4 +35,14 @@ export const registerApi = async(req,res)=>{
         console.log(err.message)
         res.json({success:false,message:"server error"})
     }
+}
+
+
+//loginApi
+
+export const loginApi = async(req,res)=>{
+    const {email,password} = req.body;
+    if(!email || !password) {
+        return  res.status(400).json({success:false,message:"fill all credentials"})
+    };
 }
