@@ -16,10 +16,15 @@ export const userSlice = createSlice({
         loginFailer: (state,action)=>{
             state.isLogin = false,
             state.error = action.payload
+        },
+        LogoutFunction: (state,action)=>{
+            state.currentUser = null
+            state.isLogin = false
+            localStorage.removeItem('root')
         }
     }
 })
 
-export const {  LoginSuccess,loginFailer} = userSlice.actions;
+export const {  LoginSuccess,loginFailer,LogoutFunction} = userSlice.actions;
 
 export default userSlice.reducer;

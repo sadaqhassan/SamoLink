@@ -6,8 +6,8 @@ const Home = () => {
   const dispatch = useDispatch()
   return (
     <div>
-     welcome Mr _{
-      currentUser?.name
+     {
+      currentUser? "Welcome mr _"+currentUser?.name : "Please Login !!" 
      }
     </div>
   )

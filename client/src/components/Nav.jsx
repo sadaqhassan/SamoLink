@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import{LogInIcon, MenuIcon, MoonIcon, Sun, X } from 'lucide-react'
-import { useSelector } from 'react-redux'
+import{LogInIcon, LogOut, MenuIcon, MoonIcon, Sun, X } from 'lucide-react'
+import { useDispatch, useSelector } from 'react-redux'
+import {LogoutFunction} from '../Store/user/userSlice'
 
 const Nav = () => {
     const [mode,setMode] = useState('light')
     const {currentUser} = useSelector((state)=>state.userData);
     const [menuOpen,setMenuOpen] = useState(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     return (
     <main>
       {/* //deskttop/ */}
@@ -33,7 +35,7 @@ const Nav = () => {
                <p className='h-8 w-8 rounded-full  absolute bg-gray-700 text-white text-center justify-center flex items-center'>{currentUser.name.slice(0,1).toUpperCase()}</p>
                <div className='fixed top-14 gap-3 space-y-1 cursor-pointer right-10 hidden  group-hover:block bg-gray-200 px-4 py-2 rounded shadow-2xl'> 
                 <p to={'/profile'}>Profile</p>
-                <p className='flex space-x-2 items-center'><LogInIcon size={20}/> Logout</p>
+                <p onClick={()=>dispatch(LogoutFunction())} className='flex space-x-2 items-center'><LogInIcon size={20}/> Logout</p>
                </div>
             </div>
             }
@@ -48,8 +50,7 @@ const Nav = () => {
        
         <div className='flex space-x-4'>
             <button onClick={()=>{mode === 'dark' ? setMode('light') : setMode('dark')}} >{mode === 'dark' ? <MoonIcon/> : <Sun/>}</button>
-            <button onClick={()=>setMenuOpen(!menuOpen)}>{!menuOpen ? <MenuIcon/> : <X/>}</button>
-
+            <button onClick={()=>setMenuOpen(!menuOpen)}>{!menuOpen ? <MenuIcon/> : <p className='h-8 w-8 rounded-full  bg-gray-100 text-gray-700 text-center justify-center flex items-center'>{currentUser?currentUser.name.slice(0,1).toUpperCase() : <X/>}</p>}</button>
         </div>
       </div>
 
@@ -59,8 +60,13 @@ const Nav = () => {
         <Link to={'/'}>Home</Link>
         <Link to={'/about'}>About</Link>
         <Link to={'/projects'}>Projects</Link>
-        <button  onClick={()=>navigate('/auth')} className='px-3 py-1 mr-5  rounded bg-green-600 text-white'>Login</button>
+        {
+            currentUser ? 
+            <button onClick={()=>dispatch(LogoutFunction())} className='px-3 py-1 flex mr-10 rounded bg-green-600 text-white'><LogOut/> Logout</button>
+            :
+            <button onClick={()=>navigate('/auth')} className='px-3 py-1 rounded bg-green-600 text-white'>Login</button>
 
+        }
     </div>
 }
 
