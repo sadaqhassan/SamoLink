@@ -83,7 +83,7 @@ export const loginApi = async (req, res) => {
     .json({
       success: true,
       message: `Welcome ${user.name}`,
-      ...rest
+      userData: rest
     })
 
   } catch (error) {

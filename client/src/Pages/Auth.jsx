@@ -1,12 +1,18 @@
 import React ,{ useState } from 'react'
+import {LoginSuccess,loginFailer} from '../Store/user/userSlice.js'
+
 
 import toast from 'react-hot-toast'
+import { useDispatch ,useSelector} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+
 const Auth = () => {
+ 
+  const dispatch = useDispatch();
+  const { Loading } =useSelector(state =>state.userData);
   const navigate = useNavigate()
   const [userData , setUserData] = useState({})
-  const [Loading,setLoading] = useState(false)
 
   const [state,setState]= useState('login')
 
@@ -19,8 +25,7 @@ const Auth = () => {
   }
 
   const handleSubmit = async(e)=>{
-    setLoading(true)
-    console.log(userData)
+      console.log(userData)
     e.preventDefault();
     //register
     if(state === 'register'){
@@ -31,7 +36,7 @@ const Auth = () => {
         body:JSON.stringify(userData)
       });
       const data = await res.json();
-      setLoading(false)
+    
       if(!data.success){
         return toast.error(data.message)
       }
@@ -51,12 +56,13 @@ const Auth = () => {
         body:JSON.stringify(userData)
       });
       const data = await res.json();
-      setLoading(false)
+    
       if(!data.success){
         return toast.error(data.message)
       }
       if(data.success){
         toast.success(data.message);
+        dispatch(LoginSuccess(data.userData));
         navigate('/');
       }
       } catch (error) {

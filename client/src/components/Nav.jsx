@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import{MenuIcon, MoonIcon, Sun, X } from 'lucide-react'
+import{LogInIcon, MenuIcon, MoonIcon, Sun, X } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 const Nav = () => {
     const [mode,setMode] = useState('light')
+    const {currentUser} = useSelector((state)=>state.userData);
     const [menuOpen,setMenuOpen] = useState(false)
     const navigate = useNavigate()
     return (
     <main>
       {/* //deskttop/ */}
-      <div className={`md:flex hidden justify-between ${mode === 'light' ?  'bg-white px-2 py-2 text-black' :'bg-gray-700 px-2 py-2 text-white'} px-4 py-4 items-center shadow-2xl`}>
+      <div className={`md:flex hidden items-center justify-between ${mode === 'light' ?  'bg-white px-2 py-2 text-black' :'bg-gray-700 px-2 py-2 text-white'} px-4 py-4 items-center shadow-2xl`}>
         <p className='text-xl md:text-2xl font-bold'>SamoLink</p>
         <div className='flex space-x-3'>
             <Link to={'/'}>Home</Link>
@@ -24,7 +26,17 @@ const Nav = () => {
         </div>
         <div className='flex space-x-4'>
             <button onClick={()=>{mode === 'dark' ? setMode('light') : setMode('dark')}} >{mode === 'light' ? <MoonIcon/> : <Sun/>}</button>
+            {!currentUser ? 
             <button onClick={()=>navigate('/auth')} className='px-3 py-1 rounded bg-green-600 text-white'>Login</button>
+            :
+            <div className='group relative mr-16'>
+               <p className='h-8 w-8 rounded-full  absolute bg-gray-700 text-white text-center justify-center flex items-center'>{currentUser.name.slice(0,1).toUpperCase()}</p>
+               <div className='fixed top-14 gap-3 space-y-1 cursor-pointer right-10 hidden  group-hover:block bg-gray-200 px-4 py-2 rounded shadow-2xl'> 
+                <p to={'/profile'}>Profile</p>
+                <p className='flex space-x-2 items-center'><LogInIcon size={20}/> Logout</p>
+               </div>
+            </div>
+            }
         </div>
       </div>
 
