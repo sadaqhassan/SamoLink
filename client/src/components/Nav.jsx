@@ -27,7 +27,7 @@ const Nav = () => {
             <input type="text" placeholder="Search" className={`w-full h-full outline-none text-gray-500 bg-transparent ${mode === 'dark' ? "placeholder-gray-100" :"placeholder-gray-500"}  text-sm`} />
         </div>
         <div className='flex space-x-4'>
-            <button onClick={()=>{mode === 'dark' ? setMode('light') : setMode('dark')}} >{mode === 'light' ? <MoonIcon/> : <Sun/>}</button>
+            <button className='mt-1.5' onClick={()=>{mode === 'dark' ? setMode('light') : setMode('dark')}} >{mode === 'light' ? <MoonIcon/> : <Sun/>}</button>
             {!currentUser ? 
             <button onClick={()=>navigate('/auth')} className='px-3 py-1 rounded bg-green-600 text-white'>Login</button>
             :
