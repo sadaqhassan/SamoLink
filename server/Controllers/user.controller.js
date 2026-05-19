@@ -7,6 +7,10 @@ import jwt from 'jsonwebtoken'
 export const registerApi = async (req,res)=>{
     const {email,password,role,name} = req.body
 
+    if(!email || !password || !name){
+        return res.status(400).json({success:false,message:"fill all inputs"})
+    }
+
     try {
         const user = await User.findOne({email});
 
@@ -44,6 +48,11 @@ export const registerApi = async (req,res)=>{
 
 export const loginApi = async (req,res)=>{
     const {email,password} = req.body
+
+    
+    if(!email || !password){
+        return res.status(400).json({success:false,message:"fill all inputs"})
+    }
     try{
         const user = await User.findOne({email});
         if(!user){
@@ -54,9 +63,12 @@ export const loginApi = async (req,res)=>{
         if(!isCompare){
             return res.status(401).json({success:false,message:"invalid credentials"})
         }
+        
         const token = jwt.sign({id:user._id,role:user.role},process.env.JWT_SECRET,{expiresIn:"1d"});
 
-        res.cookie("token",token).status(200).json({success:true,message:"welcome back"})
+        const {password:pass,...userData} = user._doc
+
+        res.cookie("token",token).status(200).json({success:true,message:"welcome back",userData:userData})
     }catch(error){
         res.status(500).json({success:false,message:"server error"})
         console.log(error)
