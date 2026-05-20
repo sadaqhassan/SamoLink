@@ -74,3 +74,21 @@ export const loginApi = async (req,res)=>{
         console.log(error)
     }
 }
+
+
+//geetUserProfile
+
+export const getUser = async (req,res) => {
+    const { userId } = req
+    console.log(userId)
+    try {
+        const user = await User.findById(userId).select("-password")
+        if(!user){
+           return res.status(404).json({success:false, message:"user not found"});
+        }
+        res.status(200).json({success:true, userData:user});
+    } catch (error) {
+        res.status(500).json({success:false,message:"server error"})
+        console.log(error)
+    }
+}
