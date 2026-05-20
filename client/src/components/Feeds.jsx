@@ -5,10 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import CreatePost from '../Pages/CreatePost.jsx'
 
 const Feeds = () => {
-  const navigate = useNavigate()
   const [createPostModel,setCreatePostModel] = useState(false) 
 
-  const path = useLocation();
   return (
     <div className='flex w-full max-w-2xl  flex-col items-center  overflow-y-auto  justify-center'> 
     {/* Create Post */}
