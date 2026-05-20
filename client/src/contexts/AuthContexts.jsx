@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -9,6 +10,9 @@ export const AuthProvider  = ({children}) => {
     const getUser = localStorage.getItem('user');
     return getUser ? JSON.parse(getUser) : null
     });
+    const [isLogedIn,setIsLogedIn] = useState(false)
+
+
 
     const userApi = 'http://localhost:4000/api/user'
 
@@ -19,10 +23,46 @@ export const AuthProvider  = ({children}) => {
             localStorage.removeItem('user')
         }
     },[user]);
+
+
+
+    const fetchUser = async () => {
+  try {
+    toast.loading("fetching...", { id: "fetch-user" });
+
+    const res = await fetch(`${userApi}/get-user`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      toast.error(data.message, {
+        id: "fetch-user",
+      });
+      return;
+    }
+
+    setUser(data.userData);
+    console.log(data.userData);
+
+    toast.success("Fetched", {
+      id: "fetch-user",
+    });
+  } catch (error) {
+    console.log(error);
+
+    toast.error("Something went wrong", {
+      id: "fetch-user",
+    });
+  }
+};
+
     
     const value = {
         user,setUser,
-        userApi
+        userApi,fetchUser
     }
 
 
