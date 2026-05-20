@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 const Login = () => {
     const [state, setState] = useState("login");
     const [inputData,setInputData] = useState({})
-    const {user,setUser,userApi} = useUser();
+    const {user,setUser,fetchUser,userApi} = useUser();
 
     const handleIputs = (e)=>{
         const {name,value} = e.target
@@ -28,9 +28,7 @@ const Login = () => {
             const data = await res.json();
 
             if(!data.success) return toast.error(data.message);
-            setUser(data.userData);
-            toast.success(data.message)
-            console.log(user);
+            fetchUser();
         }else{
             const res = await fetch(`${userApi}/register`,{
                 method:"POST",
@@ -38,7 +36,6 @@ const Login = () => {
                 body:JSON.stringify(inputData)
             });
             const data = await res.json();
-
             if(!data.success) return toast.error(data.message);
             toast.success(data.message)
             setState("login")
