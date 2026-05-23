@@ -3,9 +3,11 @@ import { useUser } from "../contexts/AuthContexts";
 import toast from "react-hot-toast";
 
 const Login = () => {
+
+
     const [state, setState] = useState("login");
     const [inputData,setInputData] = useState({})
-    const {user,setUser,fetchUser,userApi} = useUser();
+    const {user,setUser,fetchUser,userApi,fetchPosts} = useUser();
 
     const handleIputs = (e)=>{
         const {name,value} = e.target
@@ -29,6 +31,7 @@ const Login = () => {
 
             if(!data.success) return toast.error(data.message);
             fetchUser();
+           window.location.reload()
         }else{
             const res = await fetch(`${userApi}/register`,{
                 method:"POST",
@@ -42,6 +45,7 @@ const Login = () => {
             console.log(user);
     }
     }
+
     return (
         <form onSubmit={handleSubmit} className="flex mt-20 flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] text-gray-500 rounded-lg shadow-xl border border-gray-200 bg-white">
             <p className="text-2xl font-medium m-auto">

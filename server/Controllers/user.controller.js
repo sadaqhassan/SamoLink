@@ -112,3 +112,11 @@ export const updateProfile = async (req,res) => {
         console.log(error)
     }
 }
+
+
+//logout
+
+
+export const logoutApi = async (req,res) => {
+    res.clearCookie("token").status(200).json({success:true,message:"logout successfully"})
+}

@@ -5,8 +5,19 @@ import CreatePost from '../Pages/CreatePost.jsx'
 import UpdateProfile from '../Pages/UpdateProfile.jsx'
 import { usePosts } from '../contexts/PostsContext.jsx'
 import { useUser } from '../contexts/AuthContexts.jsx'
+import { LogOut } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const Feeds = () => {
+  const logoutFuntionity = async()=>{
+    const res = await fetch("http://localhost:4000/api/user/logout",{
+      method:"POST",
+      credentials:"include"
+    })
+    const data = await res.json();
+    toast.success(data.message)
+    window.location.reload()
+  }
   const { posts } = usePosts()
   const {user} = useUser()
 
@@ -15,7 +26,7 @@ const Feeds = () => {
 
   return (
     <div className='flex w-full max-w-2xl  flex-col items-start  overflow-y-auto  ml-5 mt-2  justify-center'>
-     
+     <button onClick={logoutFuntionity} className='bg-red-500 flex space-x-2 mt-4 text-white px-4 py-2 rounded'> <LogOut/> Logout</button>
        <div className='flex justify-between min-w-96 ml-5 bg-white border-b py-5 '>
         <img src="/Sam.png" className='w-26 h-26' alt="" />
         <div className='flex flex-col space-y-3'>
