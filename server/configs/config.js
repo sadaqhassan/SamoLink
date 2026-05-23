@@ -8,7 +8,7 @@ const configApp = async(app)=>{
     app.use(express.json());
     app.use(cors({
         origin:["http://localhost:5173",  //development
-        "https://samo-link.onrender.com"], // production
+        "https://samo-link.vercel.app"], // production
         credentials:true
     }))
     app.use(cookieParser());
