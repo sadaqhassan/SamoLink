@@ -12,7 +12,7 @@ const [posts , setPosts] = useState([])
 
 
 
-const postsApi = 'http://localhost:4000/api/posts'
+const postsApi = 'https://samo-link.onrender.com/api/posts'
 
 
 

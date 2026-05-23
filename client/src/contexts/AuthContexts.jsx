@@ -14,7 +14,7 @@ export const AuthProvider  = ({children}) => {
 
 
 
-    const userApi = 'http://localhost:4000/api/user'
+    const userApi = 'https://samo-link.onrender.com/api/user'
 
     useEffect(()=>{
         if(user){
