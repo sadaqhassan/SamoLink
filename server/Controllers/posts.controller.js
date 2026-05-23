@@ -4,17 +4,13 @@ import { User } from "../Model/user.schema.js"
 //post 
 export const postApi  = async (req,res) => {
     const {userId} = req
-    const {content,image} = req.body
+    const {content,image,owner,userProfile} = req.body
     if(!userId) return res.status(400).json({success:false,message:"you can't post "})
-        
-        if(!content || !image){
-            return res.status(400).json({success:false,message:"fill all field"})
-        }
     try {
         const user = await User.findById(userId);
         
         const creating = await postsSchema.create({
-            content,image,userId,owner:user.name
+            content,image,userId,owner:user.name,userProfile:user.profileImage
         });
         return  res.status(201).json({success:true ,message:"successfully posted"});
 

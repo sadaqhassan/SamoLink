@@ -16,6 +16,9 @@ const postSchema = mongoose.Schema({
     owner:{
         type:String,
     },
+    userProfile:{
+        type:String
+    }
 },{
     timestamps:true
 });
