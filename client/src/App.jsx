@@ -5,6 +5,7 @@ import {Toaster} from 'react-hot-toast'
 import { useUser } from './contexts/AuthContexts'
 import Layout from './Pages/Layout'
 import CreatePost from './Pages/CreatePost'
+import useTheme from './store/authstore'
 const App = () => {
   const {user} = useUser();
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Image, Smile } from 'lucide-react'
+import { ArrowLeft, ArrowRightLeft, Image, Smile } from 'lucide-react'
 
-const CreatePost = () => {
+const CreatePost = ({setCreatePostModel}) => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
 
@@ -26,6 +26,8 @@ const handleSubmit = () => {
   };
 
   return (
+    <div>
+      <button  onClick={()=>setCreatePostModel(false)} className="flex cursor-pointer items-center font-bold "> <ArrowLeft/>Back</button>
     <div className="min-h-screen w-[500px] flex justify-center p-10">
       <div className="w-full  bg-white rounded-2xl shadow-md p-5">
         {/* Header */}
@@ -94,6 +96,7 @@ const handleSubmit = () => {
           Post
         </button>
       </div>
+    </div>
     </div>
   );
 };
