@@ -83,7 +83,7 @@ export const getUser = async (req,res) => {
     try {
         const user = await User.findById(userId).select("-password")
         if(!user){
-           return res.status(404).json({success:false, message:"user not found"});
+        return res.status(404).json({success:false, message:"user not found"});
         }
         res.status(200).json({success:true, userData:user});
     } catch (error) {
@@ -97,17 +97,18 @@ export const getUser = async (req,res) => {
 
 export const updateProfile = async (req,res) => {
     const {userId} = req
-    const {name,email,profileImage}
+    const {name,email,profileImage} = req.body
     try {
         const user   = await User.findByIdAndUpdate(userId,{
             name,email,profileImage
         },{
-            new :true
+            new:true
         });
         if(!user) return res.status(400).json({success:false , message:"update failed"});
 
-        return res.status(201).json({success:false,message:"update successFully"});
+        return res.status(201).json({success:true,message:"update successFully"});
     } catch (error) {
-        
+        res.status(500).json({success:false,message:"server error"})
+        console.log(error)
     }
 }

@@ -10,13 +10,13 @@ const PostCard = ({data}) => {
             <div className="bg-white rounded-xl shadow p-5 my-4">
               <div className="flex items-center gap-3 mb-4">
                 <img
-                  src={data?.userProfile}
+                  src={data?.userId.profileImage}
                   alt=""
                   className="w-12 h-12 rounded-full"
                 />
 
                 <div>
-                  <h2 className="font-semibold">{data.owner}</h2>
+                  <h2 className="font-semibold">{data.userId.name}</h2>
                   <p className="text-sm text-gray-500">
                     {
                       moment(data?.createdAt).fromNow()

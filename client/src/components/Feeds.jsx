@@ -19,7 +19,7 @@ const Feeds = () => {
        <div className='flex justify-between min-w-96 ml-5 bg-white border-b py-5 '>
         <img src="/Sam.png" className='w-26 h-26' alt="" />
         <div className='flex flex-col space-y-3'>
-        <img onClick={()=>setUpdateModel(true)} src={user.profileImage} alt="" className="w-10 h-10 rounded-full"/>
+        <img onClick={()=>setUpdateModel(true)} src={user?.profileImage} alt="" className="w-10 h-10 rounded-full"/>
         <button onClick={()=>setCreatePostModel(true)} className='bg-cyan-600 px-2 py-1 rounded text-white'>Create New Post</button>
         </div>
       </div> 

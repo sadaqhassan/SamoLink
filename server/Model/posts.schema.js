@@ -12,12 +12,6 @@ const postSchema = mongoose.Schema({
     },
     image:{
         type:String,
-    },
-    owner:{
-        type:String,
-    },
-    userProfile:{
-        type:String
     }
 },{
     timestamps:true
