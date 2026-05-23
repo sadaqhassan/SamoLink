@@ -1,34 +1,38 @@
 import React from 'react'
 
+import moment from 'moment'
+
 const PostCard = ({data}) => {
   return (
     <div className=''>
 
         {/* Post Card */}
-            <div className="bg-white rounded-xl shadow p-5">
+            <div className="bg-white rounded-xl shadow p-5 my-4">
               <div className="flex items-center gap-3 mb-4">
                 <img
-                  src={data.image}
+                  src={data?.userProfile}
                   alt=""
                   className="w-12 h-12 rounded-full"
                 />
 
                 <div>
-                  <h2 className="font-semibold">{data.name}</h2>
+                  <h2 className="font-semibold">{data.owner}</h2>
                   <p className="text-sm text-gray-500">
-                    2h ago
+                    {
+                      moment(data?.createdAt).fromNow()
+                    }
                   </p>
                 </div>
               </div>
 
               <p className="mb-4">
-                {data.discription}
+                {data.content}
               </p>
 
               <img
-                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+                src={data.image}
                 alt=""
-                className="rounded-xl w-full h-[400px] object-cover"
+                className="rounded-xl w-[400px] h-[400px] object-cover"
               />
 
               <div className="flex justify-between mt-5 border-t pt-4 text-gray-600">
