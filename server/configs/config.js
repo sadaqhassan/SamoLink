@@ -7,7 +7,8 @@ const configApp = async(app)=>{
     dotenv.config();
     app.use(express.json());
     app.use(cors({
-        origin:"http://localhost:5173",
+        origin:["http://localhost:5173",  //development
+        "https://samo-link.onrender.com"], // production
         credentials:true
     }))
     app.use(cookieParser());
