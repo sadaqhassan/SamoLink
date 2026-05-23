@@ -26,7 +26,8 @@ export const AuthProvider  = ({children}) => {
 
 
 
-    const fetchUser = async () => {
+const fetchUser = async () => {
+
   try {
     toast.loading("fetching...", { id: "fetch-user" });
 
@@ -35,14 +36,21 @@ export const AuthProvider  = ({children}) => {
       credentials: "include",
     });
 
+    if(!res){
+        return setUser(null)
+    }
+
     const data = await res.json();
 
     if (!data.success) {
       toast.error(data.message, {
         id: "fetch-user",
       });
+      setUser(null);
       return;
     }
+
+
 
     setUser(data.userData);
     console.log(data.userData);
@@ -54,10 +62,14 @@ export const AuthProvider  = ({children}) => {
     console.log(error);
 
     toast.error("Something went wrong", {
-      id: "fetch-user",
+    id: "fetch-user",
     });
   }
 };
+
+useEffect(()=>{
+    fetchUser()
+},[])
 
     
     const value = {
