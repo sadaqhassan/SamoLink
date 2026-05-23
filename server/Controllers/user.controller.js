@@ -48,7 +48,6 @@ export const registerApi = async (req,res)=>{
 
 export const loginApi = async (req,res)=>{
     const {email,password} = req.body
-
     
     if(!email || !password){
         return res.status(400).json({success:false,message:"fill all inputs"})
