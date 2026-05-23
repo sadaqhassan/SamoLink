@@ -91,3 +91,23 @@ export const getUser = async (req,res) => {
         console.log(error)
     }
 }
+
+
+//update
+
+export const updateProfile = async (req,res) => {
+    const {userId} = req
+    const {name,email,profileImage}
+    try {
+        const user   = await User.findByIdAndUpdate(userId,{
+            name,email,profileImage
+        },{
+            new :true
+        });
+        if(!user) return res.status(400).json({success:false , message:"update failed"});
+
+        return res.status(201).json({success:false,message:"update successFully"});
+    } catch (error) {
+        
+    }
+}
