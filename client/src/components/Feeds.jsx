@@ -1,62 +1,49 @@
 import React, { useEffect, useState } from 'react'
-import { posts } from '../helpers/data.js'
 import PostCard from './PostCard'
 import { useLocation, useNavigate } from 'react-router-dom'
 import CreatePost from '../Pages/CreatePost.jsx'
-import { useUser } from '../contexts/AuthContexts.jsx'
 import UpdateProfile from '../Pages/UpdateProfile.jsx'
+import { usePosts } from '../contexts/PostsContext.jsx'
+import { useUser } from '../contexts/AuthContexts.jsx'
 
 const Feeds = () => {
-  const [createPostModel,setCreatePostModel] = useState(false) 
-  const [updateModel,setUpdateModel] = useState(false)
+  const { posts } = usePosts()
   const {user} = useUser()
 
-  return (
-    <div className='flex w-full max-w-2xl  flex-col items-start  overflow-y-auto  ml-5 mt-2  justify-center'> 
-    {/* Create Post */}
-            <div  className="bg-white md:ml-5 mt-2 rounded-xl md:ml:0 ml-5 shadow  p-4 mb-5 ">
-              {
-                !createPostModel &&
-                <div  className='flex space-x-4 items-center mr-3'>
-                <div onClick={()=>setCreatePostModel(true)}  className="flex items-start space-y-3 flex-col gap-3">
-                <p className='text-md ml-4'>create post</p>
-                <div  className='flex space-x-4 items-center '>
-                  <div className="flex flex-col items-center justify-center">
-                  <img onClick={(e)=>{setUpdateModel(true); e.stopPropagation()}}
-                  src={user?.profieImage}
-                  alt=""
-                  className="w-10 mb-4 h-10 rounded-full"
-                />
-                profile 
-                  </div>
+  const [createPostModel,setCreatePostModel] = useState(false) 
+  const [updateModel,setUpdateModel] = useState(false)
 
-                <input
-                  type="text"
-                  placeholder="create post"
-                  readOnly
-                  className="bg-gray-100 flex-1 rounded-full px-5 py-3 outline-none"
-                />
-                </div>
-              </div>
-              {/* //right */}
-              <div  className="flex items-start space-y-3 max-w-xl flex-col gap-3">
-                
-                </div>
-              </div>
-              
-              }
-            </div>
+  return (
+    <div className='flex w-full max-w-2xl  flex-col items-start  overflow-y-auto  ml-5 mt-2  justify-center'>
+     
+       <div className='flex justify-between min-w-96 ml-5 bg-white border-b py-5 '>
+        <img src="/Sam.png" className='w-26 h-26' alt="" />
+        <div className='flex flex-col space-y-3'>
+        <img onClick={()=>setUpdateModel(true)} src={user.profileImage} alt="" className="w-10 h-10 rounded-full"/>
+        <button onClick={()=>setCreatePostModel(true)} className='bg-cyan-600 px-2 py-1 rounded text-white'>Create New Post</button>
+        </div>
+      </div> 
+     
+
+      {
+        createPostModel &&
+        <CreatePost setCreatePostModel={setCreatePostModel}/>
+      }
+
+      {
+        updateModel && 
+        <UpdateProfile setUpdateModel={setUpdateModel}/>
+      }
     {
-      createPostModel ? <CreatePost setCreatePostModel={setCreatePostModel}/> 
-      :
+      !createPostModel || !updateModel &&
+
+      posts?.length > 0 ?  
       posts.map((post,index)=>(
         <PostCard data={post} key={index}/>
-      ))
-    }  
-
-    {
-      updateModel && <UpdateProfile setUpdateModel={setUpdateModel}/> 
-    }  
+      )) 
+      :
+      <p>there's no Posts now</p>
+    } 
     </div>
   )
 }
