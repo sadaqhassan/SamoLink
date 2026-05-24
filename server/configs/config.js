@@ -13,7 +13,7 @@ const configApp = async(app)=>{
     }))
     app.use(cookieParser());
     const port = process.env.PORT
-    app.listen(port,()=>console.log("http://localhost:"+port))
+  
 }
 
 

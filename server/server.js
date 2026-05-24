@@ -8,7 +8,8 @@ const app = express();
 
 configApp(app);
 
-app.use('/api/user',userRoute);
-app.use('/api/posts',postRoute);
-
-connectiondb()
+await connectiondb();
+const port = process.env.PORT
+app.listen(port, () => console.log("http://localhost:" + port));
+app.use('/api/user', userRoute);
+app.use('/api/posts', postRoute);
