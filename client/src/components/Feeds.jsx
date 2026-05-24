@@ -10,7 +10,7 @@ import toast from 'react-hot-toast'
 
 const Feeds = () => {
   const logoutFuntionity = async()=>{
-    const res = await fetch("https://samo-link.onrender.com/api/user/logout",{
+    const res = await fetch("https://samolink-1.onrender.com/api/user/logout",{
       method:"POST",
       credentials:"include"
     })
