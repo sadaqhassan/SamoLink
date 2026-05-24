@@ -14,7 +14,7 @@ export const AuthProvider  = ({children}) => {
 
 
 
-    const userApi = 'https://samo-link.onrender.com/api/user'
+    const userApi = 'https://samolink-1.onrender.com/api/user'
 
     useEffect(()=>{
         if(user){
@@ -27,7 +27,6 @@ export const AuthProvider  = ({children}) => {
 
 
 const fetchUser = async () => {
-
   try {
     toast.loading("fetching...", { id: "fetch-user" });
 
